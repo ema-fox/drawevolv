@@ -124,9 +124,8 @@ function draw_to(p) {
     draw_dot(p);
 }
 
-addEventListener('mousemove', event => {
+function move(mp) {
     let co = {x: canvas.offsetTop, y: canvas.offsetLeft};
-    let mp = {x: event.clientX, y: event.clientY};
     let foo = clamp(mult(minus(mp, co), 1/4));
     if (foo.x < 128 && foo.y < 128) {
         if (event.buttons === 1) {
@@ -139,6 +138,18 @@ addEventListener('mousemove', event => {
             ctx.fillRect(p.x * 4, p.y * 4, 4, 4);
         }
     }
+
+}
+
+addEventListener('mousemove', event => {
+    let mp = {x: event.clientX, y: event.clientY};
+    move(mp);
+});
+
+addEventListener('touchmove', event => {
+    let touch = event.touches.item(0);
+    let mp = {x: touch.clientX, y: touch.clientY};
+    move(mp);
 });
 
 addEventListener('mousedown', event => {
