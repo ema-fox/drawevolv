@@ -152,15 +152,25 @@ addEventListener('touchmove', event => {
     move(mp, true);
 });
 
-addEventListener('mousedown', event => {
+function down(mp) {
     let co = {x: canvas.offsetTop, y: canvas.offsetLeft};
-    let mp = {x: event.clientX, y: event.clientY};
     let foo = clamp(mult(minus(mp, co), 1/4));
     if (foo.x < 128 && foo.y < 128) {
         oldp = foo;
         draw_dot(foo);
         draw_dcanvas();
     }
+}
+
+addEventListener('touchstart', event => {
+    let touch = event.touches.item(0);
+    let mp = {x: touch.clientX, y: touch.clientY};
+    down(mp);
+});
+
+addEventListener('mousedown', event => {
+    let mp = {x: event.clientX, y: event.clientY};
+    down(mp);
 });
 
 for (let i = 0; i < palette.length; i++) {
